@@ -353,7 +353,6 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     if (null == query || query.length < minLength) {
       return [];
     }
-
     suggestions = suggestions.where((item) => filter(item, query)).toList();
     suggestions.sort(sorter);
     if (suggestions.length > maxAmount) {
@@ -372,7 +371,6 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     if (controller == null) {
       textField.controller.dispose();
     }
-    listSuggestionsEntry?.remove();
     super.dispose();
   }
 
@@ -431,12 +429,12 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           textSubmitted,
           onFocusChanged,
           itemSubmitted, (context, item) {
-        return new Padding(padding: EdgeInsets.all(8.0), child: new Text(item));
-      }, (a, b) {
-        return a.compareTo(b);
-      }, (item, query) {
-        return item.toLowerCase().startsWith(query.toLowerCase());
-      },
+            return new Padding(padding: EdgeInsets.all(8.0), child: new Text(item));
+          }, (a, b) {
+            return 0;
+          }, (item, query) {
+            return item.toLowerCase().contains(query.toLowerCase());
+          },
           suggestionsAmount,
           submitOnSuggestionTap,
           clearOnSubmit,
